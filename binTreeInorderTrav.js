@@ -22,5 +22,3 @@ var inorderTraversal = function (root) {
     }
     return traversal;
 };
-
-TreeNode(3,)
