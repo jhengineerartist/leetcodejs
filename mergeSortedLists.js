@@ -9,38 +9,40 @@ function ListNode(val, next) {
  * @param {ListNode[]} lists
  * @return {ListNode}
  */
-
-// We need a self-balancing data structure like an AVL tree
 var mergeKLists = function (lists) {
-    let populated = false;
-    let listCollection = lists;
-    let outputList = new ListNode();
-    let iterator = outputList;
+    if (!lists || lists.length === 0) {
+        return null;
+    }
+    let combinedList = lists.shift();
+    while (lists.length > 0) {
+        combinedList = mergeTwoLists(combinedList, lists.shift())
+    }
+    return combinedList;
+};
 
-    listCollection = listCollection.filter(element => {
-        return (element?.val !== undefined)
-    })
-
-    while (listCollection.length > 0) {
-        populated = true;
-        listCollection.sort((l1, l2) => {
-            return l1.val - l2.val
-        });
-        iterator.val = listCollection[0].val;
-        if (listCollection[0].next) {
-            listCollection[0] = listCollection[0].next;
-        }
-        else {
-            listCollection.shift();
-        }
-        if (listCollection.length > 0) {
-            iterator.next = new ListNode()
-            iterator = iterator.next;
-        }
+let mergeTwoLists = (list1, list2) => {
+    if ((!list1 && !list2) || (list1?.length === 0 && list2?.length === 0)) {
+        return null;
+    }
+    if (!list1 || list1.length === 0) {
+        return list2;
+    }
+    if (!list2 || list2.length === 0) {
+        return list1;
     }
 
-    return populated ? outputList : null;
-};
+    let node = null;
+    if (list1.val <= list2.val) {
+        node = list1;
+        node.next = mergeTwoLists(list1.next, list2);
+    }
+    else {
+        node = list2;
+        node.next = mergeTwoLists(list1, list2.next);
+    }
+
+    return node;
+}
 
 
 function arrayToList(array) {
