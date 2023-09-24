@@ -12,7 +12,6 @@ let recurseMatrix = (matrix, target, lower, upper) => {
         return false;
     }
     let halfway = Math.floor((upper + lower) / 2)
-    let m = matrix.length;
     let n = matrix[0].length;
     let row = Math.floor((halfway / n));
     let col = halfway % n;
