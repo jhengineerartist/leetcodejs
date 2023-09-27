@@ -91,3 +91,24 @@ class Heap {
         return '';
     }
 }
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var findKthLargest = function (nums, k) {
+    let heapFn = (a, b) => a > b; // max Heap
+    let heap = new Heap(heapFn);
+
+    for (const n of nums) {
+        heap.insert(n);
+    }
+
+    let kthElem;
+    for (let i = 0; i < k; i++) {
+        kthElem = heap.remove();
+    }
+
+    return kthElem;
+};
